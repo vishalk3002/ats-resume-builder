@@ -9,7 +9,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: "/auth/sign-in", //Tells Auth.js to use your custom sign-in page
   },
   session: {
-    strategy: "jwt",
+    strategy: "database",
     maxAge: 60 * 60 * 24 * 7, // 7 days
   },
   adapter: PrismaAdapter(prisma),
@@ -26,7 +26,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
-  callbacks: {
+  /* callbacks: {
     jwt({ token, user }) {
       if (user) {
         token.id = user.id;
@@ -42,5 +42,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return session;
     },
-  },
+  }, */
 });
