@@ -24,7 +24,7 @@ export default async function Navbar() {
           {/* RIGHT */}
           <div className="flex items-center gap-6">
             <Link
-              href="/resume-builder"
+              href={session ? "/resume-builder" : "/auth/sign-in"}
               className="text-gray-600 hover:text-black text-sm"
             >
               Resume Builder

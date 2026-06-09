@@ -1,9 +1,9 @@
 // app/dashboard/page.tsx
 
 import { auth } from "@/lib/auth";
-import prisma from "@/lib/prisma";
+
 import { redirect } from "next/navigation";
-import Link from "next/link";
+
 import DeleteAccountButton from "@/components/DeleteAccountButton";
 
 export default async function DashboardPage() {

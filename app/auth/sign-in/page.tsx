@@ -1,19 +1,28 @@
 import { SignIn, SignOut } from "@/components/auth-components";
 import { auth } from "@/lib/auth";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 type Props = {
   searchParams: Promise<{
     error?: string;
+    callbackUrl?: string;
   }>;
 };
 
-const SignInComp = async ({ searchParams }: Props) => {
+export default async function SignInComp({ searchParams }: Props) {
   const session = await auth();
 
   const params = await searchParams;
 
   const isCancelled = params.error === "OAuthCallbackError";
+
+  const callbackUrl = params.callbackUrl || "/";
+
+  // USER IS ALREADY LOGGED IN
+  if (session) {
+    redirect(callbackUrl);
+  }
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-4">
@@ -21,6 +30,7 @@ const SignInComp = async ({ searchParams }: Props) => {
         <h1 className="text-white text-xl mb-4 text-center">
           Welcome to ATS Resume Builder
         </h1>
+
         {isCancelled && (
           <div className="mb-4 rounded-lg border border-neutral-700 bg-neutral-900 p-4 text-center">
             <p className="text-neutral-200 font-medium">
@@ -40,29 +50,14 @@ const SignInComp = async ({ searchParams }: Props) => {
           </div>
         )}
 
-        {!session ? (
-          <div className="flex flex-col gap-4">
-            <SignIn provider="github" />
+        <div className="flex flex-col gap-4">
+          <SignIn provider="github" />
 
-            <div className="text-gray-400 text-center text-sm">OR</div>
+          <div className="text-gray-400 text-center text-sm">OR</div>
 
-            <SignIn provider="google" />
-          </div>
-        ) : (
-          <div className="space-y-4">
-            <div className="text-center">
-              <p className="text-gray-300">Signed in as:</p>
-              <p className="text-white">{session.user?.email}</p>
-            </div>
-
-            <div className="text-center">
-              <SignOut />
-            </div>
-          </div>
-        )}
+          <SignIn provider="google" />
+        </div>
       </div>
     </div>
   );
-};
-
-export default SignInComp;
+}

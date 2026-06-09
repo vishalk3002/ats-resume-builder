@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 import { Loader2, CirclePlus } from "lucide-react";
 
@@ -72,7 +72,7 @@ export default function ResumeBuilder() {
         }),
       );
 
-      router.push("/resume-preview");
+      router.push("/resume-builder");
     } catch (error) {
       console.error(error);
 

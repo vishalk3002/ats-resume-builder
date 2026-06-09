@@ -10,7 +10,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   session: {
     strategy: "database",
-    maxAge: 60 * 60 * 24 * 7, // 7 days
+    maxAge: 60 * 60 * 24 * 1, // 7 days
   },
   adapter: PrismaAdapter(prisma),
 
@@ -33,7 +33,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.name = user.name;
       }
       return token;
-    },
+    } 
 
     async session({ session, token }) {
       if (session.user) {
@@ -42,5 +42,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return session;
     },
-  }, */
+  },*/
 });

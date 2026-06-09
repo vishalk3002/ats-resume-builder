@@ -9,7 +9,7 @@ export function SignIn({ provider }: { provider?: string }) {
     <form
       action={async () => {
         "use server";
-        await signIn(provider, { redirectTo: "/resume-preview" });
+        await signIn(provider);
       }}
     >
       <button

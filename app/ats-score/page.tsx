@@ -71,7 +71,8 @@ export default function ATSScorePage() {
     if (!data.authenticated) {
       sessionStorage.setItem("redirect-after-login", "/resume-preview");
 
-      router.push("/auth/sign-in");
+      // router.push("/auth/sign-in");
+      router.push("/auth/sign-in?callbackUrl=/resume-preview");
       return;
     }
 
