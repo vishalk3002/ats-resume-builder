@@ -3,13 +3,19 @@ import Image from "next/image";
 import GitHubLogo from "../public/GitHub_Invertocat_White.png";
 import GoogleLogo from "../public/icons8-google-48.png";
 
-export function SignIn({ provider }: { provider?: string }) {
+export function SignIn({
+  provider,
+  callbackUrl,
+}: {
+  provider?: string;
+  callbackUrl?: string;
+}) {
   const isGithub = provider === "github";
   return (
     <form
       action={async () => {
         "use server";
-        await signIn(provider);
+        await signIn(provider, { redirectTo: callbackUrl || "/" });
       }}
     >
       <button

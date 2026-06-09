@@ -51,11 +51,11 @@ export default async function SignInComp({ searchParams }: Props) {
         )}
 
         <div className="flex flex-col gap-4">
-          <SignIn provider="github" />
+          <SignIn provider="github" callbackUrl={callbackUrl} />
 
           <div className="text-gray-400 text-center text-sm">OR</div>
 
-          <SignIn provider="google" />
+          <SignIn provider="google" callbackUrl={callbackUrl} />
         </div>
       </div>
     </div>
