@@ -32,7 +32,7 @@ export default function DefaultTemplate({ resumeText }: Props) {
         </button>
       </div>
 
-      {/* Resume */}
+      {/* --Resume-- */}
       <div className="max-w-[900px] mx-auto">
         <div
           id="resume"
