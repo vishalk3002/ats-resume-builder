@@ -16,15 +16,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
   providers: [
     GitHub,
-    Google /* ({
+    Google({
       authorization: {
         params: {
           prompt: "consent",
-          access_type: "offline",
-          response_type: "code",
+          /* access_type: "offline",
+          response_type: "code", */
         },
       },
-    }) */,
+    }),
   ],
   /* callbacks: {
     jwt({ token, user }) {
