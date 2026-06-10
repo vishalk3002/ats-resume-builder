@@ -1,15 +1,15 @@
-// components/Navbar.tsx
-
 import Link from "next/link";
 import Image from "next/image";
 
 import LOGO from "@/public/logo.png";
-
 import { auth } from "@/lib/auth";
 import UserMenu from "./UserMenu";
 
 export default async function Navbar() {
   const session = await auth();
+
+  const user = session?.user;
+  const isAuthed = !!user;
 
   return (
     <nav className="bg-white border-b shadow-sm">
@@ -25,7 +25,7 @@ export default async function Navbar() {
           <div className="flex items-center gap-6">
             <Link
               href={
-                session
+                isAuthed
                   ? "/resume-builder"
                   : "/auth/sign-in?callbackUrl=/resume-builder"
               }
@@ -34,11 +34,11 @@ export default async function Navbar() {
               Resume Builder
             </Link>
 
-            {session ? (
-              <UserMenu image={session.user?.image} name={session.user?.name} />
+            {isAuthed ? (
+              <UserMenu image={user?.image ?? null} name={user?.name ?? ""} />
             ) : (
               <Link
-                href="/auth/sign-in"
+                href="/auth/sign-in?callbackUrl=/resume-builder"
                 className="bg-black text-white px-4 py-2 rounded-lg"
               >
                 Sign In

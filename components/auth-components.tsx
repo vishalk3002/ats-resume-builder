@@ -15,6 +15,7 @@ export function SignIn({
     <form
       action={async () => {
         "use server";
+        if (!provider) return;
         await signIn(provider, { redirectTo: callbackUrl || "/" });
       }}
     >

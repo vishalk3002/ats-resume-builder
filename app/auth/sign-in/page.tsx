@@ -23,7 +23,7 @@ export default async function SignInComp({ searchParams }: Props) {
   if (session) {
     redirect(callbackUrl);
   }
-  console.log("callbackUrl:", callbackUrl);
+
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-4">
       <div className="bg-neutral-800 rounded-lg p-6 max-w-xl w-full">
