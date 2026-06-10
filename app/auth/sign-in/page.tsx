@@ -14,7 +14,6 @@ export default async function SignInComp({ searchParams }: Props) {
   const session = await auth();
 
   const params = await searchParams;
-  console.log("Auth error:", params.error);
 
   const isCancelled = params.error === "OAuthCallbackError";
 

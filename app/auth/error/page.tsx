@@ -1,23 +1,23 @@
 import { redirect } from "next/navigation";
 
 type Props = {
-  searchParams: {
+  searchParams: Promise<{
     error?: string;
-  };
+  }>;
 };
 
-export default function AuthErrorPage({ searchParams }: Props) {
-  const error = searchParams.error;
+export default async function AuthErrorPage({ searchParams }: Props) {
+  const params = await searchParams;
 
-  // treat cancel as normal flow
+  const error = params.error;
+
   if (
     error === "OAuthCallbackError" ||
     error === "AccessDenied" ||
     error === "Configuration"
   ) {
-    redirect("/auth/sign-in"); // or "/"
+    redirect("/auth/sign-in");
   }
 
-  // fallback
   redirect("/auth/sign-in");
 }
