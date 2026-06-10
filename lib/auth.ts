@@ -46,7 +46,7 @@
 // });
 
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import NextAuth from "next-auth";
+import NextAuth, { Session } from "next-auth";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import prisma from "./prisma";
@@ -58,7 +58,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
   session: {
     strategy: "jwt", // ⚡ this is the key change
-    maxAge: 60 * 60 * 24 * 7,
+    maxAge: 60 * 60 * 24 * 1,
   },
 
   adapter: PrismaAdapter(prisma),
@@ -83,7 +83,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return token;
     },
 
-    async session({ session, token }) {
+    async session({ session }): Promise<Session | null> {
       const email = session.user?.email;
       if (typeof email !== "string") return null as any;
 
@@ -92,13 +92,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         select: { id: true, name: true, email: true },
       });
 
-      if (!dbUser) return null as any; // handles deleted users
+      if (!dbUser || !dbUser.email) return null;
 
       session.user = {
         ...session.user,
         id: dbUser.id,
         name: dbUser.name ?? session.user.name,
-        email: dbUser.email ?? email,
+        email: dbUser.email,
       };
 
       return session;
