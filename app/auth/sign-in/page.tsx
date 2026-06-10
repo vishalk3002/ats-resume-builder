@@ -1,4 +1,4 @@
-import { SignIn, SignOut } from "@/components/auth-components";
+import { SignIn } from "@/components/auth-components";
 import { auth } from "@/lib/auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -12,15 +12,16 @@ type Props = {
 
 export default async function SignInComp({ searchParams }: Props) {
   const session = await auth();
+  const user = session?.user;
 
   const params = await searchParams;
 
+  const callbackUrl = params.callbackUrl || "/resume-builder";
+
   const isCancelled = params.error === "OAuthCallbackError";
 
-  const callbackUrl = params.callbackUrl || "/";
-
-  // USER IS ALREADY LOGGED IN
-  if (session) {
+  // FIX: use user, not session
+  if (user) {
     redirect(callbackUrl);
   }
 
@@ -37,15 +38,11 @@ export default async function SignInComp({ searchParams }: Props) {
               Sign in was cancelled
             </p>
 
-            <p className="text-sm text-neutral-400 mt-1">
-              You can continue using ATS Score without an account.
-            </p>
-
             <Link
-              href="/ats-score"
-              className="inline-block mt-4 rounded-md bg-white px-4 py-2 text-black font-medium hover:bg-neutral-200 transition"
+              href={callbackUrl}
+              className="inline-block mt-4 rounded-md bg-white px-4 py-2 text-black font-medium"
             >
-              Return to ATS Score
+              Continue
             </Link>
           </div>
         )}

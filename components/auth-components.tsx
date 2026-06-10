@@ -11,24 +11,29 @@ export function SignIn({
   callbackUrl?: string;
 }) {
   const isGithub = provider === "github";
+
   return (
     <form
       action={async () => {
         "use server";
-        if (!provider) return;
-        await signIn(provider, { redirectTo: callbackUrl || "/" });
+
+        if (!provider) {
+          throw new Error("Provider is required");
+        }
+
+        await signIn(provider, {
+          redirectTo: callbackUrl || "/resume-builder",
+        });
       }}
     >
       <button
-        className={`w-full p-3 rounded-md font-medium transition flex items-center justify-center gap-3 ${
-          isGithub
-            ? "bg-black text-white hover:bg-neutral-400"
-            : "bg-gray-400 text-black hover:bg-white border"
+        className={`w-full p-3 rounded-md font-medium flex items-center justify-center gap-3 ${
+          isGithub ? "bg-black text-white" : "bg-gray-400 text-black"
         }`}
       >
         <Image
           src={isGithub ? GitHubLogo : GoogleLogo}
-          alt={isGithub ? "GitHub Logo" : "Google Logo"}
+          alt="OAuth Logo"
           style={{ width: "20px", height: "auto" }}
         />
 
@@ -45,11 +50,8 @@ export function SignOut() {
         "use server";
         await signOut({ redirectTo: "/" });
       }}
-      className="w-full"
     >
-      <button className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
-        Sign Out
-      </button>
+      <button className="text-gray-600 px-3 py-2 text-sm">Sign Out</button>
     </form>
   );
 }

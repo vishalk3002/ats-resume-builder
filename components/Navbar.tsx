@@ -11,6 +11,8 @@ export default async function Navbar() {
   const user = session?.user;
   const isAuthed = !!user;
 
+  const loginRedirect = "/auth/sign-in?callbackUrl=/resume-builder";
+
   return (
     <nav className="bg-white border-b shadow-sm">
       <div className="max-w-8xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -24,11 +26,7 @@ export default async function Navbar() {
           {/* RIGHT */}
           <div className="flex items-center gap-6">
             <Link
-              href={
-                isAuthed
-                  ? "/resume-builder"
-                  : "/auth/sign-in?callbackUrl=/resume-builder"
-              }
+              href={isAuthed ? "/resume-builder" : loginRedirect}
               className="text-gray-600 hover:text-black text-sm"
             >
               Resume Builder
@@ -38,7 +36,7 @@ export default async function Navbar() {
               <UserMenu image={user?.image ?? null} name={user?.name ?? ""} />
             ) : (
               <Link
-                href="/auth/sign-in?callbackUrl=/resume-builder"
+                href={loginRedirect}
                 className="bg-black text-white px-4 py-2 rounded-lg"
               >
                 Sign In
