@@ -9,11 +9,15 @@ type Props = {
 export default function AuthErrorPage({ searchParams }: Props) {
   const error = searchParams.error;
 
-  // Treat cancel / access denied as safe exit
-  if (error === "AccessDenied" || error === "OAuthCallbackError") {
-    redirect("/");
+  // treat cancel as normal flow
+  if (
+    error === "OAuthCallbackError" ||
+    error === "AccessDenied" ||
+    error === "Configuration"
+  ) {
+    redirect("/auth/sign-in"); // or "/"
   }
 
-  // fallback for real errors
+  // fallback
   redirect("/auth/sign-in");
 }
