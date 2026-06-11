@@ -7,6 +7,7 @@ import prisma from "./prisma";
 export const { handlers, signIn, signOut, auth } = NextAuth({
   pages: {
     signIn: "/auth/sign-in", //Tells Auth.js to use your custom sign-in page
+    error: "/auth/error",
   },
   session: {
     strategy: "database",
