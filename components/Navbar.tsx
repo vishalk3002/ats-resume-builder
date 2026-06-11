@@ -11,7 +11,7 @@ export default async function Navbar() {
   const user = session?.user;
   const isAuthed = !!user;
 
-  const loginRedirect = "/";
+  const loginRedirect = "/auth/sign-in?callbackUrl=/resume-builder";
 
   return (
     <nav className="bg-white border-b shadow-sm">
@@ -36,7 +36,7 @@ export default async function Navbar() {
               <UserMenu image={user?.image ?? null} name={user?.name ?? ""} />
             ) : (
               <Link
-                href={loginRedirect}
+                href="/auth/sign-in"
                 className="bg-black text-white px-4 py-2 rounded-lg"
               >
                 Sign In
