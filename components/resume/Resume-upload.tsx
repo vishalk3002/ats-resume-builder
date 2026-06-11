@@ -72,7 +72,7 @@ export default function ResumeBuilder() {
         }),
       );
 
-      router.push("/resume-builder");
+      router.push("/resume-preview");
     } catch (error) {
       console.error(error);
 
